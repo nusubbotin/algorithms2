@@ -1,65 +1,65 @@
 import java.util.Arrays;
 
-public class ArrayList implements StringList{
+public class ArrayList implements IntList{
 
-    private final String[] stringArray;
+    private final Integer[] stor;
     private int size;
 
     public ArrayList() {
-        stringArray = new String[10];
+        stor = new Integer[10];
     }
 
     public ArrayList(int initSize) {
-        stringArray = new String[initSize];
+        stor = new Integer[initSize];
     }
 
     @Override
-    public String add(String item) {
+    public Integer add(Integer item) {
         validateSize();
         validateValue(item);
-        stringArray[size++] = item;
+        stor[size++] = item;
         return item;
     }
 
     @Override
-    public String add(int index, String item) {
+    public Integer add(int index, Integer item) {
         validateSize();
         validateIndex(index);
         validateValue(item);
 
         if (index == size) {
-           stringArray[size++] = item;
+           stor[size++] = item;
             return item;
         }
 
-        System.arraycopy(stringArray, index, stringArray, index + 1, size - index);
-        stringArray[index] = item;
+        System.arraycopy(stor, index, stor, index + 1, size - index);
+        stor[index] = item;
         return item;
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         validateIndex(index);
         validateValue(item);
-        stringArray[index] = item;
+        stor[index] = item;
         return item;
     }
 
     @Override
-    public String remove(String item) {
+    public Integer remove(Integer item) {
         validateValue(item);
         int index = indexOf(item);
         return remove(index);
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         validateIndex(index);
 
-        String item = stringArray[index];
+        Integer item = stor[index];
 
         if (index != size){
-            System.arraycopy(stringArray, index + 1, stringArray, index, size - index);
+            System.arraycopy(stor, index + 1, stor, index, size - index);
         }
 
         size--;
@@ -67,14 +67,14 @@ public class ArrayList implements StringList{
     }
 
     @Override
-    public boolean contains(String item) {
+    public boolean contains(Integer item) {
         return indexOf(item) != -1;
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         for (int i = 0; i < size; i++) {
-            if (stringArray[i].equals(item)){
+            if (stor[i].equals(item)){
                 return 1;
             }
         }
@@ -82,9 +82,9 @@ public class ArrayList implements StringList{
     }
 
     @Override
-    public int lastIndexOf(String item) {
+    public int lastIndexOf(Integer item) {
         for (int i = size-1; i >= 0; i--) {
-            if (stringArray[i].equals(item)){
+            if (stor[i].equals(item)){
                 return 1;
             }
         }
@@ -92,13 +92,13 @@ public class ArrayList implements StringList{
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         validateIndex(index);
-        return stringArray[index];
+        return stor[index];
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(IntList otherList) {
         return Arrays.equals(this.toArray(), otherList.toArray());
     }
 
@@ -118,18 +118,18 @@ public class ArrayList implements StringList{
     }
 
     @Override
-    public String[] toArray() {
-        return Arrays.copyOf(stringArray, size);
+    public Integer[] toArray() {
+        return Arrays.copyOf(stor, size);
     }
 
-    private void validateValue(String value){
+    private void validateValue(Integer value){
         if (value == null) {
             throw new NullValueException();
         }
     }
 
     private void validateSize(){
-        if (size >= stringArray.length){
+        if (size >= stor.length){
             throw new ArrayLengthExceptiom();
         }
     }
